@@ -1,0 +1,15 @@
+{
+  "name": "designq-landing-chatbot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "디자인큐 랜딩페이지 + floating 챗봇 (OpenAI gpt-5.2-mini)",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "openai": "^4.77.0"
+  }
+}
