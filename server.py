@@ -14,8 +14,10 @@ ROOT = Path(__file__).resolve().parent
 PUBLIC = ROOT / "public"
 PORT = int(os.environ.get("PORT", "3000"))
 MODEL = "gpt-5.4-mini"
+EMBED_MODEL = "text-embedding-3-small"
 CHATBOT_NAME = "큐봇"
 MAX_HISTORY = 10
+MATCH_COUNT = 5
 
 MIME = {
     ".html": "text/html; charset=utf-8",
@@ -54,8 +56,72 @@ def load_knowledge_base():
     return _docs_cache
 
 
-def build_system_prompt():
-    docs = load_knowledge_base()
+# ---------- Supabase (서버 전용, service_role) ----------
+def supabase_enabled():
+    return bool(os.environ.get("SUPABASE_URL") and os.environ.get("SUPABASE_SERVICE_ROLE_KEY"))
+
+
+def supabase_request(method, path, body=None, prefer=None):
+    url = os.environ["SUPABASE_URL"].rstrip("/") + path
+    key = os.environ["SUPABASE_SERVICE_ROLE_KEY"]
+    headers = {"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    if prefer:
+        headers["Prefer"] = prefer
+    data = json.dumps(body).encode("utf-8") if body is not None else None
+    req = urllib.request.Request(url, data=data, headers=headers, method=method)
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        raw = resp.read()
+        return json.loads(raw) if raw else None
+
+
+def embed_query(text, api_key):
+    req = urllib.request.Request(
+        "https://api.openai.com/v1/embeddings",
+        data=json.dumps({"model": EMBED_MODEL, "input": text}).encode("utf-8"),
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return json.loads(resp.read())["data"][0]["embedding"]
+
+
+# RAG: 성공 시 관련 청크 문자열, 실패/없음/미설정 시 None (→ 전체 문서 폴백)
+def retrieve_context(query, api_key):
+    if not supabase_enabled():
+        return None
+    try:
+        emb = embed_query(query, api_key)
+        rows = supabase_request(
+            "POST", "/rest/v1/rpc/match_documents",
+            body={"query_embedding": emb, "match_count": MATCH_COUNT},
+        )
+        if not rows:
+            return None
+        return "\n\n".join(f"===== {r.get('source') or '문서'} =====\n{r.get('content','')}" for r in rows)
+    except Exception as e:
+        print(f"RAG 검색 실패, 폴백: {e}")
+        return None
+
+
+# 대화 로그 best-effort
+def log_chat(question, answer):
+    if not supabase_enabled():
+        return
+    try:
+        supabase_request("POST", "/rest/v1/chat_logs",
+                         body={"question": question, "answer": answer}, prefer="return=minimal")
+    except Exception as e:
+        print(f"chat_logs 기록 실패(무시): {e}")
+
+
+def insert_lead(industry, contact, message):
+    supabase_request("POST", "/rest/v1/leads",
+                     body={"industry": industry, "contact": contact, "message": message},
+                     prefer="return=minimal")
+
+
+def build_system_prompt(knowledge):
+    docs = knowledge
     return "\n".join([
         f'당신은 디자인 대행사 "디자인큐(DesignQ)"의 공식 상담 챗봇 "{CHATBOT_NAME}"입니다.',
         "브랜드 톤앤매너: 쉽고 명확하게, 단정적이지만 따뜻하게, 과장 없이 솔직하게. 디자인 비전문가도 편하게 이해할 수 있는 친근한 말투를 사용하세요.",
@@ -87,9 +153,14 @@ def call_openai(history):
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY 미설정")
+    # 마지막 사용자 질문 → RAG 검색, 실패 시 전체 문서 폴백
+    last_user = next((m["content"] for m in reversed(history) if m["role"] == "user"), "")
+    knowledge = retrieve_context(last_user, api_key) if last_user else None
+    if not knowledge:
+        knowledge = load_knowledge_base()
     payload = json.dumps({
         "model": MODEL,
-        "messages": [{"role": "system", "content": build_system_prompt()}] + history,
+        "messages": [{"role": "system", "content": build_system_prompt(knowledge)}] + history,
     }).encode("utf-8")
     req = urllib.request.Request(
         "https://api.openai.com/v1/chat/completions",
@@ -112,19 +183,28 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _read_body(self):
+        length = int(self.headers.get("Content-Length", "0"))
+        raw = self.rfile.read(length) if length else b"{}"
+        return json.loads(raw.decode("utf-8") or "{}")
+
     def do_POST(self):
-        if self.path.split("?")[0] != "/api/chat":
+        route = self.path.split("?")[0]
+        if route == "/api/lead":
+            self._handle_lead()
+            return
+        if route != "/api/chat":
             self._json(404, {"error": "Not Found"})
             return
         try:
-            length = int(self.headers.get("Content-Length", "0"))
-            raw = self.rfile.read(length) if length else b"{}"
-            body = json.loads(raw.decode("utf-8") or "{}")
+            body = self._read_body()
             history = sanitize_history(body.get("messages"))
             if not history:
                 self._json(400, {"error": "메시지가 비어 있습니다."})
                 return
             reply = call_openai(history)
+            last_user = next((m["content"] for m in reversed(history) if m["role"] == "user"), "")
+            log_chat(last_user, reply)  # best-effort
             self._json(200, {"reply": reply})
         except urllib.error.HTTPError as e:
             detail = e.read().decode("utf-8", "ignore")
@@ -133,6 +213,24 @@ class Handler(BaseHTTPRequestHandler):
         except Exception as e:
             print(f"/api/chat 오류: {e}")
             self._json(500, {"error": "답변 생성 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요."})
+
+    def _handle_lead(self):
+        try:
+            body = self._read_body()
+            industry = str(body.get("industry", ""))[:200]
+            contact = str(body.get("contact", ""))[:200]
+            message = str(body.get("message", ""))[:4000]
+            if not contact and not message:
+                self._json(400, {"error": "연락처 또는 문의 내용을 입력해 주세요."})
+                return
+            if not supabase_enabled():
+                self._json(503, {"error": "상담 접수 저장소가 아직 설정되지 않았어요."})
+                return
+            insert_lead(industry, contact, message)
+            self._json(200, {"ok": True})
+        except Exception as e:
+            print(f"/api/lead 오류: {e}")
+            self._json(500, {"error": "상담 신청 저장 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요."})
 
     def do_GET(self):
         url_path = self.path.split("?")[0]

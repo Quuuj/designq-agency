@@ -4,7 +4,7 @@ const { handleChat } = require('../lib/chat');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'POST 요청만 허용됩니다.', version: 'v3-debug', hasKey: !!process.env.OPENAI_API_KEY });
+    res.status(405).json({ error: 'POST 요청만 허용됩니다.' });
     return;
   }
 
@@ -19,7 +19,6 @@ module.exports = async function handler(req, res) {
   } catch (err) {
     const status = err.statusCode || 500;
     console.error('/api/chat 오류:', err.message);
-    // TODO: 진단용 — 원인 확인 후 제거 예정
-    res.status(status).json({ error: '답변 생성 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.', debug: String(err && err.message) });
+    res.status(status).json({ error: '답변 생성 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.' });
   }
 };

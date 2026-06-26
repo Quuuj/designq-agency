@@ -301,7 +301,20 @@ class Component extends DCLogic {
       onIndustry: this.set('industry'),
       onContact: this.set('contact'),
       onMessage: this.set('message'),
-      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+      onSubmit: (e) => {
+        e.preventDefault();
+        // 상담 신청을 leads 테이블에 저장 (best-effort — 실패해도 UX는 진행)
+        fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            industry: this.state.industry,
+            contact: this.state.contact,
+            message: this.state.message,
+          }),
+        }).catch(() => {});
+        this.setState({ submitted: true });
+      },
       reset: () => this.setState({ industry: '', contact: '', message: '', submitted: false }),
     };
   }

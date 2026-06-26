@@ -6,6 +6,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { handleChat } = require('./lib/chat');
+const { getSupabase } = require('./lib/supabase');
 
 const PORT = process.env.PORT || 3000;
 const ROOT = path.join(__dirname, 'public');
@@ -62,7 +63,43 @@ function serveStatic(req, res) {
 }
 
 const server = http.createServer(async (req, res) => {
-  if (req.url.split('?')[0] === '/api/chat') {
+  const route = req.url.split('?')[0];
+
+  if (route === '/api/lead') {
+    if (req.method !== 'POST') {
+      res.writeHead(405, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'POST 요청만 허용됩니다.' }));
+      return;
+    }
+    try {
+      const body = await readJsonBody(req);
+      const industry = (body.industry || '').toString().slice(0, 200);
+      const contact = (body.contact || '').toString().slice(0, 200);
+      const message = (body.message || '').toString().slice(0, 4000);
+      if (!contact && !message) {
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ error: '연락처 또는 문의 내용을 입력해 주세요.' }));
+        return;
+      }
+      const supabase = getSupabase();
+      if (!supabase) {
+        res.writeHead(503, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ error: '상담 접수 저장소가 아직 설정되지 않았어요.' }));
+        return;
+      }
+      const { error } = await supabase.from('leads').insert({ industry, contact, message });
+      if (error) throw new Error(error.message);
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ ok: true }));
+    } catch (err) {
+      console.error('/api/lead 오류:', err.message);
+      res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: '상담 신청 저장 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.' }));
+    }
+    return;
+  }
+
+  if (route === '/api/chat') {
     if (req.method !== 'POST') {
       res.writeHead(405, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({ error: 'POST 요청만 허용됩니다.' }));
