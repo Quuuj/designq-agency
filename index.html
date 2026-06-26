@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.min.css">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;font-family:Pretendard,system-ui,-apple-system,sans-serif;color:#2E2F38;background:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:#2A4DE3;color:#fff}
+a{color:inherit}
+</style>
+</helmet>
+<div id="top" style="background:#fff">
+
+<header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.78);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid #ececf1">
+  <nav style="max-width:1120px;margin:0 auto;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;background:#2A4DE3;color:#fff;font-weight:700;font-size:15px;letter-spacing:-0.02em">Q</span>
+      <span style="font-weight:700;font-size:18px;letter-spacing:-0.02em;color:#1A1F36">디자인큐</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:30px">
+      <a href="#why" style="text-decoration:none;color:#2E2F38;font-size:15px;font-weight:500;letter-spacing:-0.01em">차별점</a>
+      <a href="#process" style="text-decoration:none;color:#2E2F38;font-size:15px;font-weight:500;letter-spacing:-0.01em">프로세스</a>
+      <a href="#inquiry" style="text-decoration:none;color:#2E2F38;font-size:15px;font-weight:500;letter-spacing:-0.01em">문의</a>
+      <a href="#inquiry" style="display:inline-flex;align-items:center;justify-content:center;padding:9px 18px;border-radius:999px;background:#FF6B4A;color:#fff;font-size:15px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;transition:transform .15s ease,background .15s ease" style-hover="background:#f2542f" style-active="transform:scale(0.96)">견적 문의</a>
+    </div>
+  </nav>
+</header>
+
+<sc-if value="{{ heroCentered }}" hint-placeholder-val="{{ true }}">
+<section style="background:#fff">
+  <div style="max-width:1120px;margin:0 auto;padding:clamp(80px,11vw,144px) 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:28px">
+    <span style="display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:999px;background:#eef1fd;color:#2A4DE3;font-size:14px;font-weight:600;letter-spacing:-0.01em">
+      <span style="width:6px;height:6px;border-radius:50%;background:#FF6B4A"></span>중소기업·소상공인을 위한 디자인 파트너
+    </span>
+    <h1 style="margin:0;font-weight:700;font-size:clamp(42px,7.2vw,78px);line-height:1.22;letter-spacing:-0.035em;color:#1A1F36;text-wrap:balance">작은 브랜드에<br>큰 디자인을</h1>
+    <p style="margin:0;max-width:600px;font-size:clamp(18px,2.2vw,22px);line-height:1.6;color:#5b6172">대형 에이전시의 전문성은 그대로, 비용과 절차의 부담은 덜어냈습니다. 사장님 사업에 맞는 디자인을 제안합니다.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:4px">
+      <a href="#inquiry" style="display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;background:#FF6B4A;color:#fff;font-size:17px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;transition:transform .15s ease,background .15s ease" style-hover="background:#f2542f" style-active="transform:scale(0.96)">견적 문의하기</a>
+      <a href="#why" style="display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;background:transparent;color:#2A4DE3;font-size:17px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;border:1px solid rgba(42,77,227,0.45);transition:transform .15s ease,background .15s ease" style-hover="background:#eef1fd" style-active="transform:scale(0.96)">차별점 보기</a>
+    </div>
+    <div style="margin-top:28px;width:100%;max-width:980px;aspect-ratio:16/9;border-radius:18px;background:repeating-linear-gradient(135deg,#f4f5f9,#f4f5f9 13px,#e9ebf1 13px,#e9ebf1 26px);display:flex;align-items:center;justify-content:center;box-shadow:rgba(26,31,54,0.16) 0 18px 50px">
+      <span style="font:500 13px/1.5 ui-monospace,Menlo,monospace;color:#9097A8;letter-spacing:0.02em;text-align:center">작업 결과물 대표 이미지<br>1600 × 900 · 자연광 실사진</span>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ heroSplit }}" hint-placeholder-val="{{ true }}">
+<section style="background:#fff">
+  <div style="max-width:1120px;margin:0 auto;padding:clamp(64px,9vw,120px) 24px;display:flex;gap:56px;align-items:center;flex-wrap:wrap">
+    <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+      <span style="display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:999px;background:#eef1fd;color:#2A4DE3;font-size:14px;font-weight:600;letter-spacing:-0.01em">
+        <span style="width:6px;height:6px;border-radius:50%;background:#FF6B4A"></span>중소기업·소상공인 디자인 파트너
+      </span>
+      <h1 style="margin:0;font-weight:700;font-size:clamp(38px,5.6vw,62px);line-height:1.2;letter-spacing:-0.035em;color:#1A1F36;text-wrap:balance">작은 브랜드에<br>큰 디자인을</h1>
+      <p style="margin:0;max-width:480px;font-size:clamp(17px,2vw,20px);line-height:1.6;color:#5b6172">대형 에이전시의 전문성은 그대로, 비용과 절차의 부담은 덜어냈습니다. 사장님 사업에 맞는 디자인을 제안합니다.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="#inquiry" style="display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;background:#FF6B4A;color:#fff;font-size:17px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;transition:transform .15s ease,background .15s ease" style-hover="background:#f2542f" style-active="transform:scale(0.96)">견적 문의하기</a>
+        <a href="#why" style="display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;background:transparent;color:#2A4DE3;font-size:17px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;border:1px solid rgba(42,77,227,0.45);transition:transform .15s ease,background .15s ease" style-hover="background:#eef1fd" style-active="transform:scale(0.96)">차별점 보기</a>
+      </div>
+    </div>
+    <div style="flex:1 1 380px;aspect-ratio:4/5;border-radius:18px;background:repeating-linear-gradient(135deg,#f4f5f9,#f4f5f9 13px,#e9ebf1 13px,#e9ebf1 26px);display:flex;align-items:center;justify-content:center;box-shadow:rgba(26,31,54,0.16) 0 18px 50px">
+      <span style="font:500 13px/1.5 ui-monospace,Menlo,monospace;color:#9097A8;letter-spacing:0.02em;text-align:center">대표 작업 이미지<br>1200 × 1500 · 세로형</span>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ heroDark }}" hint-placeholder-val="{{ true }}">
+<section style="background:#1A1F36;color:#fff">
+  <div style="max-width:1120px;margin:0 auto;padding:clamp(96px,13vw,168px) 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:30px">
+    <span style="display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:999px;background:rgba(42,77,227,0.28);color:#9db4ff;font-size:14px;font-weight:600;letter-spacing:-0.01em">
+      <span style="width:6px;height:6px;border-radius:50%;background:#FF6B4A"></span>DESIGNQ — 디자인 파트너
+    </span>
+    <h1 style="margin:0;font-weight:700;font-size:clamp(48px,8.4vw,96px);line-height:1.16;letter-spacing:-0.04em;color:#fff;text-wrap:balance">작은 브랜드에<br>큰 디자인을</h1>
+    <p style="margin:0;max-width:600px;font-size:clamp(18px,2.2vw,23px);line-height:1.6;color:#aeb4c6">대형 에이전시의 전문성은 그대로, 비용과 절차의 부담은 덜어냈습니다.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:4px">
+      <a href="#inquiry" style="display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;background:#FF6B4A;color:#fff;font-size:17px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;transition:transform .15s ease,background .15s ease" style-hover="background:#f2542f" style-active="transform:scale(0.96)">견적 문의하기</a>
+      <a href="#why" style="display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:999px;background:transparent;color:#fff;font-size:17px;font-weight:600;letter-spacing:-0.01em;text-decoration:none;border:1px solid rgba(255,255,255,0.45);transition:transform .15s ease,background .15s ease" style-hover="background:rgba(255,255,255,0.08)" style-active="transform:scale(0.96)">차별점 보기</a>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<section id="why" style="background:#1A1F36;color:#fff">
+  <div style="max-width:1120px;margin:0 auto;padding:clamp(80px,11vw,136px) 24px">
+    <div style="max-width:680px;margin-bottom:clamp(40px,5vw,64px)">
+      <span style="display:inline-block;color:#FF6B4A;font-size:15px;font-weight:600;letter-spacing:0.02em;margin-bottom:18px">왜 디자인큐인가</span>
+      <h2 style="margin:0 0 18px;font-weight:700;font-size:clamp(32px,4.6vw,52px);line-height:1.25;letter-spacing:-0.03em;color:#fff;text-wrap:balance">큰 곳의 실력,<br>가까운 곳의 호흡</h2>
+      <p style="margin:0;font-size:clamp(17px,2vw,20px);line-height:1.6;color:#aeb4c6">고정된 고가 패키지도, 다단계 보고도 없습니다. 담당 디자이너가 직접 소통하며 사업 규모에 맞는 견적을 제안합니다.</p>
+    </div>
+
+    <sc-if value="{{ compareTable }}" hint-placeholder-val="{{ true }}">
+    <div style="border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.1)">
+      <div style="display:grid;grid-template-columns:1.1fr 1fr 1fr">
+        <div style="padding:18px 24px;font-size:14px;font-weight:600;color:#7a8197;background:rgba(255,255,255,0.02)">구분</div>
+        <div style="padding:18px 24px;font-size:15px;font-weight:600;color:#aeb4c6;background:rgba(255,255,255,0.02)">대형 에이전시</div>
+        <div style="padding:18px 24px;font-size:15px;font-weight:700;color:#fff;background:rgba(42,77,227,0.30);display:flex;align-items:center;gap:8px"><span style="width:7px;height:7px;border-radius:50%;background:#FF6B4A"></span>디자인큐</div>
+        <sc-for list="{{ compareRows }}" as="row" hint-placeholder-count="4">
+          <div style="padding:22px 24px;font-size:16px;font-weight:600;color:#fff;border-top:1px solid rgba(255,255,255,0.08)">{{ row.gubun }}</div>
+          <div style="padding:22px 24px;font-size:16px;line-height:1.5;color:#9097A8;border-top:1px solid rgba(255,255,255,0.08)">{{ row.big }}</div>
+          <div style="padding:22px 24px;font-size:16px;line-height:1.5;font-weight:600;color:#fff;background:rgba(42,77,227,0.16);border-top:1px solid rgba(255,255,255,0.08)">{{ row.dq }}</div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ compareCards }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px">
+      <sc-for list="{{ compareRows }}" as="row" hint-placeholder-count="4">
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:16px">
+          <span style="font-size:15px;font-weight:600;color:#9db4ff;letter-spacing:-0.01em">{{ row.gubun }}</span>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:14px;color:#7a8197">대형 에이전시</span>
+            <span style="font-size:16px;color:#9097A8;line-height:1.45">{{ row.big }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.1)">
+            <span style="font-size:14px;font-weight:600;color:#FF6B4A">디자인큐</span>
+            <span style="font-size:16px;font-weight:600;color:#fff;line-height:1.45">{{ row.dq }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+</section>
+
+<section id="process" style="background:#F2F3F7">
+  <div style="max-width:1120px;margin:0 auto;padding:clamp(80px,11vw,136px) 24px">
+    <div style="max-width:680px;margin-bottom:clamp(40px,5vw,64px)">
+      <span style="display:inline-block;color:#2A4DE3;font-size:15px;font-weight:600;letter-spacing:0.02em;margin-bottom:18px">협업 프로세스</span>
+      <h2 style="margin:0 0 18px;font-weight:700;font-size:clamp(32px,4.6vw,52px);line-height:1.25;letter-spacing:-0.03em;color:#1A1F36;text-wrap:balance">상담부터 사후지원까지, 5단계</h2>
+      <p style="margin:0;font-size:clamp(17px,2vw,20px);line-height:1.6;color:#5b6172">무료 상담으로 시작해 평균 영업일 5일 내 시안을 전달합니다. 디자인 경험이 없어도 편하게 소통할 수 있습니다.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:20px">
+      <sc-for list="{{ steps }}" as="step" hint-placeholder-count="5">
+        <div style="background:#fff;border:1px solid #e8e9ef;border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;min-height:200px">
+          <span style="font-weight:700;font-size:30px;letter-spacing:-0.02em;color:#2A4DE3">{{ step.n }}</span>
+          <h3 style="margin:0;font-size:18px;font-weight:700;letter-spacing:-0.02em;color:#1A1F36">{{ step.title }}</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.6;color:#5b6172;flex:1">{{ step.desc }}</p>
+          <sc-if value="{{ step.hasNote }}" hint-placeholder-val="{{ true }}">
+            <span style="align-self:flex-start;padding:5px 12px;border-radius:999px;background:#fff2ee;color:#FF6B4A;font-size:12.5px;font-weight:600;letter-spacing:-0.01em">{{ step.note }}</span>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="inquiry" style="background:#2A4DE3;color:#fff">
+  <div style="max-width:1120px;margin:0 auto;padding:clamp(80px,11vw,136px) 24px;display:flex;gap:56px;flex-wrap:wrap;align-items:flex-start">
+    <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:20px">
+      <span style="display:inline-block;color:#cdd8ff;font-size:15px;font-weight:600;letter-spacing:0.02em">견적 문의</span>
+      <h2 style="margin:0;font-weight:700;font-size:clamp(32px,4.6vw,52px);line-height:1.25;letter-spacing:-0.03em;color:#fff;text-wrap:balance">사업 규모에 맞춰<br>견적을 조정해 드려요</h2>
+      <p style="margin:0;max-width:440px;font-size:clamp(17px,2vw,20px);line-height:1.6;color:#d4dcff">무료 상담으로 부담 없이 시작하세요. 소규모 단건 작업도 가능하며, 일정 기간 무상 수정을 지원합니다.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;font-size:15px;color:#e3e8ff">
+        <span>· 이메일 contact@designq.example.com</span>
+        <span>· 전화 02-000-0000</span>
+      </div>
+    </div>
+
+    <div style="flex:1 1 400px">
+      <sc-if value="{{ showFormCard }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ onSubmit }}" style="background:#fff;border-radius:24px;padding:clamp(24px,3vw,34px);display:flex;flex-direction:column;gap:16px;color:#2E2F38">
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <label style="font-size:14px;font-weight:600;color:#1A1F36;letter-spacing:-0.01em">업종 / 업태</label>
+          <input value="{{ industry }}" onChange="{{ onIndustry }}" placeholder="예: 카페, 온라인 셀러, 초기 스타트업" style="border:1px solid #e0e0e6;border-radius:12px;padding:13px 16px;font-size:16px;font-family:inherit;color:#1A1F36;outline:none;transition:border-color .15s ease" style-focus="border-color:#2A4DE3" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <label style="font-size:14px;font-weight:600;color:#1A1F36;letter-spacing:-0.01em">연락처 (이메일 또는 전화)</label>
+          <input value="{{ contact }}" onChange="{{ onContact }}" placeholder="회신받으실 연락처를 입력해 주세요" style="border:1px solid #e0e0e6;border-radius:12px;padding:13px 16px;font-size:16px;font-family:inherit;color:#1A1F36;outline:none;transition:border-color .15s ease" style-focus="border-color:#2A4DE3" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <label style="font-size:14px;font-weight:600;color:#1A1F36;letter-spacing:-0.01em">문의 내용</label>
+          <textarea value="{{ message }}" onChange="{{ onMessage }}" rows="4" placeholder="필요한 디자인 작업(로고·상세페이지·인쇄물 등)과 일정을 적어주세요." style="border:1px solid #e0e0e6;border-radius:12px;padding:13px 16px;font-size:16px;font-family:inherit;color:#1A1F36;outline:none;resize:vertical;line-height:1.5;transition:border-color .15s ease" style-focus="border-color:#2A4DE3"></textarea>
+        </div>
+        <button type="submit" style="margin-top:4px;padding:15px;border-radius:999px;background:#FF6B4A;color:#fff;font-size:17px;font-weight:600;letter-spacing:-0.01em;border:none;cursor:pointer;font-family:inherit;transition:transform .15s ease,background .15s ease" style-hover="background:#f2542f" style-active="transform:scale(0.98)">견적 문의하기</button>
+        <p style="margin:0;font-size:12.5px;line-height:1.5;color:#9097A8;text-align:center">제출하신 정보는 상담 목적으로만 사용됩니다.</p>
+      </form>
+      </sc-if>
+
+      <sc-if value="{{ showThanks }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:24px;padding:clamp(32px,4vw,48px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;color:#2E2F38;min-height:300px;justify-content:center">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:#eef1fd;color:#2A4DE3;font-size:28px;font-weight:700">✓</span>
+        <h3 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.02em;color:#1A1F36">문의가 접수되었습니다</h3>
+        <p style="margin:0;max-width:320px;font-size:16px;line-height:1.6;color:#5b6172">평균 영업일 5일 내 담당 디자이너가 직접 연락드립니다. 감사합니다.</p>
+        <button onClick="{{ reset }}" style="margin-top:6px;padding:11px 22px;border-radius:999px;background:transparent;color:#2A4DE3;font-size:15px;font-weight:600;border:1px solid rgba(42,77,227,0.45);cursor:pointer;font-family:inherit;transition:background .15s ease" style-hover="background:#eef1fd">다시 작성하기</button>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ showButtons }}" hint-placeholder-val="{{ false }}">
+      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:24px;padding:clamp(28px,3.5vw,40px);display:flex;flex-direction:column;gap:16px">
+        <h3 style="margin:0;font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#fff">지금 바로 상담하세요</h3>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#d4dcff">간단한 문의도 환영합니다. 아래로 편하게 연락 주세요.</p>
+        <a href="mailto:contact@designq.example.com" style="display:inline-flex;align-items:center;justify-content:center;padding:15px;border-radius:999px;background:#FF6B4A;color:#fff;font-size:17px;font-weight:600;text-decoration:none;transition:transform .15s ease,background .15s ease" style-hover="background:#f2542f" style-active="transform:scale(0.98)">이메일로 견적 문의</a>
+        <a href="tel:02-000-0000" style="display:inline-flex;align-items:center;justify-content:center;padding:15px;border-radius:999px;background:#fff;color:#2A4DE3;font-size:17px;font-weight:600;text-decoration:none;transition:transform .15s ease" style-active="transform:scale(0.98)">전화로 문의 02-000-0000</a>
+      </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#F2F3F7;color:#2E2F38">
+  <div style="max-width:1120px;margin:0 auto;padding:clamp(56px,7vw,80px) 24px 40px">
+    <div style="display:flex;gap:48px;flex-wrap:wrap;justify-content:space-between">
+      <div style="flex:1 1 280px;max-width:340px;display:flex;flex-direction:column;gap:16px">
+        <a href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;background:#2A4DE3;color:#fff;font-weight:700;font-size:15px">Q</span>
+          <span style="font-weight:700;font-size:18px;letter-spacing:-0.02em;color:#1A1F36">디자인큐</span>
+        </a>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:#5b6172">작은 브랜드에 큰 디자인을. 중소기업·소상공인이 믿고 맡길 수 있는 합리적·전략적 디자인 파트너입니다.</p>
+      </div>
+      <div style="display:flex;gap:48px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:140px">
+          <span style="font-size:13px;font-weight:700;color:#9097A8;letter-spacing:0.02em">서비스</span>
+          <span style="font-size:15px;color:#2E2F38">브랜드 디자인</span>
+          <span style="font-size:15px;color:#2E2F38">온라인 / 디지털</span>
+          <span style="font-size:15px;color:#2E2F38">오프라인 / 인쇄</span>
+          <span style="font-size:15px;color:#2E2F38">디자인 컨설팅</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:120px">
+          <span style="font-size:13px;font-weight:700;color:#9097A8;letter-spacing:0.02em">바로가기</span>
+          <a href="#why" style="font-size:15px;color:#2E2F38;text-decoration:none" style-hover="color:#2A4DE3">차별점</a>
+          <a href="#process" style="font-size:15px;color:#2E2F38;text-decoration:none" style-hover="color:#2A4DE3">프로세스</a>
+          <a href="#inquiry" style="font-size:15px;color:#2E2F38;text-decoration:none" style-hover="color:#2A4DE3">견적 문의</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:200px">
+          <span style="font-size:13px;font-weight:700;color:#9097A8;letter-spacing:0.02em">연락처</span>
+          <span style="font-size:15px;color:#2E2F38">contact@designq.example.com</span>
+          <span style="font-size:15px;color:#2E2F38">02-000-0000</span>
+          <span style="font-size:15px;color:#2E2F38">www.designq.example.com</span>
+          <span style="font-size:15px;color:#2E2F38">@designq.official</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:48px;padding-top:24px;border-top:1px solid #e0e1e8;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center">
+      <span style="font-size:12.5px;color:#9097A8;line-height:1.5">© 2021–2026 디자인큐(DesignQ). 본 페이지는 가상의 디자인 대행사 예시로 제작되었습니다.</span>
+      <span style="font-size:12.5px;color:#9097A8">설립 2021 · 서울 · 전국 서비스(원격·방문 병행)</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;heroVariant&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;중앙 정렬&quot;, &quot;options&quot;: [&quot;중앙 정렬&quot;, &quot;좌우 분할&quot;, &quot;에디토리얼(다크)&quot;], &quot;tsType&quot;: &quot;string&quot; },
+  &quot;compareLayout&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;표 형식&quot;, &quot;options&quot;: [&quot;표 형식&quot;, &quot;카드 형식&quot;], &quot;tsType&quot;: &quot;string&quot; },
+  &quot;showInquiryForm&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; }
+}">
+class Component extends DCLogic {
+  state = { industry: '', contact: '', message: '', submitted: false };
+
+  set(key) {
+    return (e) => this.setState({ [key]: e.target.value });
+  }
+
+  renderVals() {
+    const v = this.props.heroVariant ?? '중앙 정렬';
+    const cmp = this.props.compareLayout ?? '표 형식';
+    const showForm = this.props.showInquiryForm ?? true;
+
+    const compareRows = [
+      { gubun: '비용 구조', big: '고정 고가 패키지', dq: '사업 규모별 맞춤 견적' },
+      { gubun: '의사결정 속도', big: '다단계 보고 체계', dq: '담당 디자이너 직접 소통' },
+      { gubun: '최소 프로젝트 단위', big: '대형 프로젝트 중심', dq: '소규모 단건 작업 가능' },
+      { gubun: '사후 관리', big: '추가 비용 발생', dq: '일정 기간 무상 수정 지원' },
+    ];
+
+    const steps = [
+      { n: '01', title: '상담 및 진단', desc: '비즈니스 현황과 디자인 니즈를 파악합니다.', hasNote: true, note: '무료 상담' },
+      { n: '02', title: '견적 및 일정 협의', desc: '프로젝트 범위에 맞춘 맞춤 견적을 제안합니다.', hasNote: false, note: '' },
+      { n: '03', title: '컨셉 제안', desc: '2~3개 시안으로 디자인 방향성을 확정합니다.', hasNote: true, note: '2~3개 시안' },
+      { n: '04', title: '디자인 진행', desc: '피드백을 반영해 결과물의 완성도를 높입니다.', hasNote: false, note: '' },
+      { n: '05', title: '최종 전달 및 사후지원', desc: '결과물 전달 후 일정 기간 무상 수정을 지원합니다.', hasNote: true, note: '무상 수정' },
+    ];
+
+    return {
+      heroCentered: v === '중앙 정렬',
+      heroSplit: v === '좌우 분할',
+      heroDark: v === '에디토리얼(다크)',
+      compareTable: cmp === '표 형식',
+      compareCards: cmp === '카드 형식',
+      showFormCard: showForm && !this.state.submitted,
+      showThanks: showForm && this.state.submitted,
+      showButtons: !showForm,
+      compareRows,
+      steps,
+      industry: this.state.industry,
+      contact: this.state.contact,
+      message: this.state.message,
+      onIndustry: this.set('industry'),
+      onContact: this.set('contact'),
+      onMessage: this.set('message'),
+      onSubmit: (e) => { e.preventDefault(); this.setState({ submitted: true }); },
+      reset: () => this.setState({ industry: '', contact: '', message: '', submitted: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>
