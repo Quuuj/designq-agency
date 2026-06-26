@@ -4,7 +4,7 @@ const { handleChat } = require('../lib/chat');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'POST 요청만 허용됩니다.' });
+    res.status(405).json({ error: 'POST 요청만 허용됩니다.', version: 'v3-debug', hasKey: !!process.env.OPENAI_API_KEY });
     return;
   }
 
