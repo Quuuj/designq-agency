@@ -11,6 +11,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+PUBLIC = ROOT / "public"
 PORT = int(os.environ.get("PORT", "3000"))
 MODEL = "gpt-5.4-mini"
 CHATBOT_NAME = "큐봇"
@@ -45,7 +46,7 @@ def load_knowledge_base():
     if _docs_cache is not None:
         return _docs_cache
     combined = ""
-    updir = ROOT / "uploads"
+    updir = PUBLIC / "uploads"
     if updir.is_dir():
         for f in sorted(updir.glob("*.md")):
             combined += f"\n\n===== 문서: {f.name} =====\n{f.read_text(encoding='utf-8')}"
@@ -137,8 +138,8 @@ class Handler(BaseHTTPRequestHandler):
         url_path = self.path.split("?")[0]
         if url_path == "/":
             url_path = "/index.html"
-        target = (ROOT / url_path.lstrip("/")).resolve()
-        if not str(target).startswith(str(ROOT)) or not target.is_file():
+        target = (PUBLIC / url_path.lstrip("/")).resolve()
+        if not str(target).startswith(str(PUBLIC)) or not target.is_file():
             self.send_response(404)
             self.send_header("Content-Type", "text/plain; charset=utf-8")
             self.end_headers()

@@ -8,7 +8,7 @@ const path = require('path');
 const { handleChat } = require('./lib/chat');
 
 const PORT = process.env.PORT || 3000;
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, 'public');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
